@@ -29,11 +29,13 @@ module.exports = () => {
         swDest: 'src-sw.js',
       }),
       new WebpackPwaManifest({
+        fingerprints: false,
+        inject: true,
         name: 'Text Editor',
-        short_name: 'Text Editor',
-        description: 'Keep track of important tasks!',
-        background_color: '#7eb4e2',
-        theme_color: '#7eb4e2',
+        short_name: 'Editor',
+        description: 'Edit text files',
+        background_color: '#225ca3',
+        theme_color: '#225ca3',
         start_url: './',
         publicPath: './',
         icons: [
@@ -43,10 +45,11 @@ module.exports = () => {
             destination: path.join('assets', 'icons'),
           },
         ],
-      }),     
+      }),   
     ],
 
     module: {
+      // CSS loaders
       rules: [
         {
           test: /\.css$/i,
@@ -55,6 +58,7 @@ module.exports = () => {
         {
           test: /\.m?js$/,
           exclude: /node_modules/,
+          // We use babel-loader in order to use ES6.
           use: {
             loader: 'babel-loader',
             options: {
