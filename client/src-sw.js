@@ -30,7 +30,7 @@ registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 registerRoute(
   // Here we define the callback function that will filter the requests we want to cache (in this case, JS and CSS files)
   ({ request }) => ['style', 'script', 'worker'].includes(request.destination),
-  new StaleWhileRevalidate({
+  new CacheFirst({
     // Name of the cache storage.
     cacheName: 'asset-cache',
     plugins: [
@@ -41,3 +41,25 @@ registerRoute(
     ],
   })
 );
+
+// const stylesRoute = new Route(({ request }) => {
+//   return request.destination === 'style';
+// }, new CacheFirst({
+//   cacheName: 'styles'
+// }));
+
+// const scriptsRoute = new Route(({ request }) => {
+//   return request.destination === 'script';
+// }, new CacheFirst({
+//   cacheName: 'scripts'
+// }));
+
+// const imageRoute = new Route(({ request }) => {
+//   return request.destination === 'image'
+// }, new StaleWhileRevalidate({
+//   cacheName: 'images'
+// }));
+
+// registerRoute(stylesRoute);
+// registerRoute(scriptsRoute);
+// registerRoute(imageRoute);
